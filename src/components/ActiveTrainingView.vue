@@ -52,7 +52,7 @@
             <div class="ex-header-row">
               <div class="thumb-container">
                 <!-- Always show the GIF, but adjust its style based on expanded state via CSS -->
-                <img class="thumb video" :src="`/action/${ex.key}.gif`" alt="action gif" />
+                <img class="thumb video" :src="getActionGifSrc(ex.key)" alt="action gif" />
               </div>
 
               <div class="ex-info">
@@ -521,6 +521,7 @@ const coachMascot = hajimiCats.flex
 const waitingMascot = hajimiCats.rest
 const planMascot = hajimiCats.stretch
 const activeMascot = hajimiCats.jump
+const actionGifBase = `${import.meta.env.BASE_URL}action/`
 const shareFriends = [
   { name: '何以为家', short: '何', color: 'linear-gradient(135deg, #93c5fd, #c4b5fd)' },
   { name: '浅唱', short: '浅', color: 'linear-gradient(135deg, #bbf7d0, #86efac)' },
@@ -528,6 +529,10 @@ const shareFriends = [
   { name: '一路向前', short: '前', color: 'linear-gradient(135deg, #fdba74, #fb7185)' },
   { name: '好久不见', short: '好', color: 'linear-gradient(135deg, #d8b4fe, #f0abfc)' }
 ]
+
+function getActionGifSrc(actionKey?: string) {
+  return `${actionGifBase}${actionKey || 'dumbbell_curl'}.gif`
+}
 
 // Check if there are records for a given day in this month (mock implementation uses current month)
 function hasTrainingOnDay(day: number) {
