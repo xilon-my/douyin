@@ -355,24 +355,26 @@ function scroll() {
 }
 
 function touchStart(e: TouchEvent) {
+  if (!e.touches || e.touches.length === 0) return
   state.start.x = e.touches[0].pageX
   state.start.y = e.touches[0].pageY
   state.start.time = Date.now()
   state.isTop = page.value.scrollTop === 0
-  if (state.isTop) {
+  if (state.isTop && cover.value) {
     cover.value.style.transition = 'none'
   }
   // console.log('touchStart', page.value.scrollTop)
 }
 
 function touchMove(e: TouchEvent) {
+  if (!e.touches || e.touches.length === 0) return
   state.move.x = e.touches[0].pageX - state.start.x
   state.move.y = e.touches[0].pageY - state.start.y
   let isNext = state.move.y < 0
 
   // console.log('touchMove', page.value.scrollTop)
   //todo 有空了加个，越滑越紧的效果
-  if (state.isTop && !isNext && document.body.clientHeight / 4 > state.move.y) {
+  if (state.isTop && !isNext && document.body.clientHeight / 4 > state.move.y && cover.value) {
     // if (state.isTop && !isNext) {
     let scrollHeight = state.move.y
     cover.value.style.height = `calc(${state.coverHeight}rem + ${scrollHeight}px)`
@@ -380,7 +382,7 @@ function touchMove(e: TouchEvent) {
 }
 
 function touchEnd() {
-  if (state.isTop) {
+  if (state.isTop && cover.value) {
     state.isTop = false
     cover.value.style.transition = 'all .3s'
     cover.value.style.height = `calc(${state.coverHeight}rem)`

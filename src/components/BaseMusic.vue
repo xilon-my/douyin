@@ -13,7 +13,7 @@
     </div>
     <img
       class="music"
-      :src="item.music?.cover_thumb.url_list[0]"
+      :src="item.music?.cover_thumb?.url_list?.[0]"
       :style="style"
       v-click="
         () =>

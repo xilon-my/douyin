@@ -9,7 +9,14 @@ import VueMacros from 'unplugin-vue-macros/vite'
 
 const lifecycle = process.env.npm_lifecycle_event
 
-export default defineConfig((): Promise<UserConfig> => {
+function getBase(mode: string) {
+  if (mode === 'gp_pages' || mode === 'gitee_pages') {
+    return '/douyin/'
+  }
+  return '/'
+}
+
+export default defineConfig(({ mode }): Promise<UserConfig> => {
   let latestCommitHash = ''
 
   return new Promise((resolve) => {
@@ -18,7 +25,7 @@ export default defineConfig((): Promise<UserConfig> => {
         latestCommitHash = commit.shortHash
       }
       resolve({
-        base: './',
+        base: getBase(mode),
         envDir: 'env',
         plugins: [
           VueMacros({

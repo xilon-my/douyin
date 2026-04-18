@@ -60,6 +60,19 @@
 
           <div class="shares list" v-else>
             <template v-if="mode === 'video'">
+              <div
+                class="option"
+                v-if="item && item.id === 'real_fitness_video_001'"
+                @click.stop="closeShare($emit('aiExtractPlan'))"
+              >
+                <div class="ai-plan-entry">
+                  <img class="ai-plan-mascot" :src="catMascot" alt="哈肌咪训练助手" />
+                  <div class="ai-plan-copy">
+                    <span class="ai-plan-title">哈肌咪解析计划</span>
+                    <small>一键拆成训练动作</small>
+                  </div>
+                </div>
+              </div>
               <div class="option" @click.stop="closeShare($emit('ShareToFriend'))">
                 <img
                   class="avatar"
@@ -161,6 +174,9 @@
 import FromBottomDialog from './dialog/FromBottomDialog'
 import { useBaseStore } from '@/store/pinia'
 import { _checkImgUrl, _copy, _hideLoading, _no, _notice, _showLoading, _sleep } from '@/utils'
+import hajimiCats from '@/cats'
+
+const catMascot = hajimiCats.stretch
 
 defineOptions({
   name: 'Share'
@@ -343,6 +359,46 @@ function shared() {
       padding: 14rem;
       border-radius: 50%;
       background: @c;
+    }
+
+    .ai-plan-entry {
+      width: 88rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8rem;
+    }
+
+    .ai-plan-mascot {
+      width: 58rem;
+      height: 58rem;
+      border-radius: 50%;
+      padding: 6rem;
+      object-fit: cover;
+      background: linear-gradient(135deg, rgba(242, 173, 112, 0.22), rgba(169, 215, 181, 0.18));
+      box-shadow: inset 0 0 0 1px rgba(242, 173, 112, 0.2);
+    }
+
+    .ai-plan-copy {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    .ai-plan-title {
+      width: auto;
+      margin-top: 0;
+      color: #f2ad70;
+      font-weight: 700;
+    }
+
+    .ai-plan-copy small {
+      color: rgba(255, 247, 238, 0.72);
+      font-size: 9rem;
+      line-height: 1.3;
     }
   }
 

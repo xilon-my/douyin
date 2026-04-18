@@ -133,14 +133,46 @@ function togglePlay() {
   })
 }
 
+function handleInjectFeedItem(item) {
+  if (props.uniqueId === 'home' || props.uniqueId.includes('home')) {
+    // Inject immediately after the current playing video so the next swipe shows it
+    state.list.splice(state.index + 1, 0, item)
+    if (listRef.value && listRef.value.handleInjectItem) {
+      listRef.value.handleInjectItem(item)
+    }
+  }
+}
+
+function handleScrollToNextVideo() {
+  if (props.uniqueId === 'home' || props.uniqueId.includes('home')) {
+    if (listRef.value) {
+      listRef.value.next()
+    }
+  }
+}
+
+function handleScrollToPrevVideo() {
+  if (props.uniqueId === 'home' || props.uniqueId.includes('home')) {
+    if (listRef.value) {
+      listRef.value.prev()
+    }
+  }
+}
+
 onMounted(() => {
   bus.on(EVENT_KEY.SINGLE_CLICK, click)
   bus.on(EVENT_KEY.UPDATE_ITEM, updateItem)
   bus.on(EVENT_KEY.TOGGLE_CURRENT_VIDEO, togglePlay)
+  bus.on('INJECT_FEED_ITEM', handleInjectFeedItem)
+  bus.on('SCROLL_TO_NEXT_VIDEO', handleScrollToNextVideo)
+  bus.on('SCROLL_TO_PREV_VIDEO', handleScrollToPrevVideo)
 })
 onUnmounted(() => {
   bus.off(EVENT_KEY.SINGLE_CLICK, click)
   bus.off(EVENT_KEY.UPDATE_ITEM, updateItem)
   bus.off(EVENT_KEY.TOGGLE_CURRENT_VIDEO, togglePlay)
+  bus.off('INJECT_FEED_ITEM', handleInjectFeedItem)
+  bus.off('SCROLL_TO_NEXT_VIDEO', handleScrollToNextVideo)
+  bus.off('SCROLL_TO_PREV_VIDEO', handleScrollToPrevVideo)
 })
 </script>

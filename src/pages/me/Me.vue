@@ -34,6 +34,9 @@
             <div class="item" @click="_no">
               <Icon icon="ic:round-search" />
             </div>
+            <div class="item" @click="startTrainingFromHistory">
+              <Icon icon="mdi:dumbbell" class="history-icon" />
+            </div>
             <div class="item" @click.stop="baseActiveIndex = 1">
               <Icon icon="ic:round-menu" />
             </div>
@@ -378,7 +381,14 @@ import { mapState } from 'pinia'
 
 import bus from '../../utils/bus'
 import ConfirmDialog from '../../components/dialog/ConfirmDialog'
-import { _checkImgUrl, _formatNumber, _getUserDouyinId, _no, _stopPropagation } from '@/utils'
+import {
+  _checkImgUrl,
+  _formatNumber,
+  _getUserDouyinId,
+  _no,
+  _stopPropagation,
+  _notice
+} from '@/utils'
 import { likeVideo, myVideo, privateVideo } from '@/api/videos'
 import { useBaseStore } from '@/store/pinia'
 import { userCollect } from '@/api/user'
@@ -488,6 +498,19 @@ export default {
     bus.on('baseSlide-end', () => (this.canScroll = true))
   },
   methods: {
+    startTrainingFromHistory() {
+      // Set a flag to force open training view in index.vue even if there's no plan
+      useBaseStore().setForceShowTraining(true)
+
+      // Get the first item from store training history (if exists) or fall back to null
+      const history = useBaseStore().trainingHistory
+      if (history && history.length > 0) {
+        // Try to find the original full plan from history. In this mock we might just pass an empty structure or rely on the ActiveTrainingView to handle the empty state.
+        // For a real app, you would fetch the full plan details. Here we just set it to null to trigger the empty state.
+      }
+
+      this.$nav('/')
+    },
     _no,
     _getUserDouyinId,
     _checkImgUrl,
@@ -895,4 +918,161 @@ export default {
 
 <style scoped lang="less">
 @import 'Me';
+.history-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  .history-drawer {
+    background: #fff;
+    width: 100%;
+    height: 75%;
+    border-top-left-radius: 24rem;
+    border-top-right-radius: 24rem;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    &.slide-up {
+      transform: translateY(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20rem;
+      border-bottom: 1px solid #f3f4f6;
+
+      .drawer-title {
+        font-size: 18rem;
+        font-weight: bold;
+        color: #111827;
+      }
+
+      .close-icon {
+        font-size: 24rem;
+        color: #9ca3af;
+        background: #f3f4f6;
+        border-radius: 50%;
+        padding: 4rem;
+      }
+    }
+
+    .drawer-categories {
+      display: flex;
+      gap: 10rem;
+      padding: 15rem 20rem;
+      overflow-x: auto;
+      border-bottom: 1px solid #f3f4f6;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .category-item {
+        white-space: nowrap;
+        padding: 6rem 16rem;
+        background: #f3f4f6;
+        border-radius: 20rem;
+        font-size: 14rem;
+        color: #4b5563;
+
+        &.active {
+          background: #3b82f6;
+          color: #fff;
+        }
+      }
+    }
+
+    .drawer-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20rem;
+      display: flex;
+      flex-direction: column;
+      gap: 15rem;
+
+      .history-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f9fafb;
+        border-radius: 16rem;
+        padding: 15rem;
+        border: 1px solid #f3f4f6;
+
+        .card-left {
+          display: flex;
+          align-items: center;
+          gap: 15rem;
+
+          .plan-cover {
+            width: 48rem;
+            height: 64rem;
+            object-fit: cover;
+            border-radius: 8rem;
+            background: #eff6ff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          }
+
+          .plan-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+
+            .plan-title {
+              font-size: 16rem;
+              font-weight: bold;
+              color: #111827;
+            }
+
+            .plan-meta {
+              font-size: 12rem;
+              color: #6b7280;
+            }
+          }
+        }
+
+        .card-right {
+          .use-btn {
+            background: #3b82f6;
+            color: #fff;
+            font-size: 13rem;
+            padding: 6rem 16rem;
+            border-radius: 20rem;
+            font-weight: 500;
+          }
+        }
+      }
+
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50rem;
+        color: #9ca3af;
+
+        svg {
+          font-size: 64rem;
+          margin-bottom: 10rem;
+          color: #e5e7eb;
+        }
+
+        p {
+          font-size: 14rem;
+        }
+      }
+    }
+  }
+}
 </style>

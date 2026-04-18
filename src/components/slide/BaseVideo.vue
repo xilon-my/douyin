@@ -17,7 +17,7 @@
       :autoplay="isPlay"
     >
       <source
-        v-for="(urlItem, index) in item.video.play_addr.url_list"
+        v-for="(urlItem, index) in item.video.play_addr?.url_list"
         :key="index"
         :src="urlItem"
         type="video/mp4"
@@ -174,7 +174,7 @@ let state = reactive({
   commentVisible: false
 })
 const poster = $computed(() => {
-  return _checkImgUrl(props.item.video.poster ?? props.item.video.cover.url_list[0])
+  return _checkImgUrl(props.item.video.poster ?? props.item.video.cover?.url_list?.[0])
 })
 const durationStyle = $computed(() => {
   return { width: state.playX + 'px' }

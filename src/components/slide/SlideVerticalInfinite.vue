@@ -250,7 +250,55 @@ function dislike() {
   // currentItem.replaceWith(replaceItem)
 }
 
-defineExpose({ dislike })
+function prev() {
+  if (state.localIndex > 0) {
+    state.localIndex--
+    _css(
+      slideListEl.value,
+      'transform',
+      `translate3d(0px,${getSlideOffset(state, slideListEl.value)}px,  0px)`
+    )
+    _css(slideListEl.value, 'transition-duration', `300ms`)
+
+    // We need to re-render DOM items just like the native scroll event does
+    setTimeout(() => {
+      insertContent()
+      bus.emit(EVENT_KEY.CURRENT_ITEM, props.list[state.localIndex])
+    }, 50)
+  }
+}
+
+function next() {
+  if (state.localIndex < props.list.length - 1) {
+    state.localIndex++
+    _css(
+      slideListEl.value,
+      'transform',
+      `translate3d(0px,${getSlideOffset(state, slideListEl.value)}px,  0px)`
+    )
+    _css(slideListEl.value, 'transition-duration', `300ms`)
+
+    // We need to re-render DOM items just like the native scroll event does
+    setTimeout(() => {
+      insertContent()
+      bus.emit(EVENT_KEY.CURRENT_ITEM, props.list[state.localIndex])
+    }, 50)
+  }
+}
+
+function handleInjectItem(item) {
+  if (state.localIndex < props.list.length) {
+    // We insert it directly into the list
+    // Vue will trigger the watch on props.list
+    // However, because we only render virtualTotal items, we might need to manually insert the DOM if it falls within the visible range.
+    // The easiest way to force a re-render of the visible window without breaking the scroll offset is to just re-evaluate insertContent
+    setTimeout(() => {
+      insertContent()
+    }, 50)
+  }
+}
+
+defineExpose({ dislike, prev, next, handleInjectItem })
 
 /**
  * 获取Vue组件渲染之后的dom元素

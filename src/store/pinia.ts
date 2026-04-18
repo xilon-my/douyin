@@ -51,7 +51,18 @@ export const useBaseStore = defineStore('base', {
         ]
       },
       friends: resource.users,
-      message: ''
+      message: '',
+      pendingTrainingPlan: null,
+      fitnessProfile: {
+        height: null,
+        weight: null,
+        age: null,
+        gender: 1, // 1: male, 2: female
+        targetCalories: 2500 // Now represents weekly target in kcal
+      },
+      trainingHistory: [], // [{ date: '2023-10-27', title: '...', duration: 1800, calories: 120 }]
+      savedPlans: [], // List of workout plans saved to history
+      forceShowTraining: false
     }
   },
   getters: {
@@ -77,6 +88,24 @@ export const useBaseStore = defineStore('base', {
       this.maskDialog = val.state
       if (val.mode) {
         this.maskDialogMode = val.mode
+      }
+    },
+    setPendingTrainingPlan(val) {
+      this.pendingTrainingPlan = val
+    },
+    setForceShowTraining(val) {
+      this.forceShowTraining = val
+    },
+    setFitnessProfile(val) {
+      this.fitnessProfile = Object.assign(this.fitnessProfile, val)
+    },
+    addTrainingRecord(record) {
+      this.trainingHistory.push(record)
+    },
+    savePlan(plan) {
+      // Prevent duplicates based on title
+      if (!this.savedPlans.find((p) => p.title === plan.title)) {
+        this.savedPlans.unshift(plan)
       }
     },
     updateExcludeNames(val) {

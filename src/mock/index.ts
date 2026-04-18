@@ -6,6 +6,8 @@ import { useBaseStore } from '@/store/pinia'
 import { axiosInstance } from '@/utils/request'
 import MockAdapter from 'axios-mock-adapter'
 
+import video1 from '@/video/video1.mp4'
+
 const mock = new MockAdapter(axiosInstance)
 
 function getPage2(params: any): { limit: number; offset: number; pageNo: number } {
@@ -20,6 +22,71 @@ let allRecommendVideos = posts6.map((v: any) => {
   v.type = 'recommend-video'
   return v
 })
+
+// Inject the Real Fitness Video as the first item
+const realFitnessVideoMock = {
+  type: 'recommend-video',
+  id: 'real_fitness_video_001',
+  desc: '试试这几个动作练二头 #运动健身 #二头肌',
+  author: {
+    uid: 'weiyade',
+    nickname: '维亚德',
+    unique_id: 'weiyade_fitness',
+    avatar_168x168: {
+      url_list: [
+        'https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_d28300968e9f2c689e509f73f636f427.jpeg?from=327834062'
+      ]
+    },
+    avatar_300x300: {
+      url_list: [
+        'https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_d28300968e9f2c689e509f73f636f427.jpeg?from=327834062'
+      ]
+    },
+    cover_url: [{ url_list: [] }],
+    white_cover_url: [{ url_list: [] }]
+  },
+  video: {
+    play_addr: {
+      url_list: [video1, '/videos/video1.mp4']
+    },
+    cover: {
+      url_list: [
+        'https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_d28300968e9f2c689e509f73f636f427.jpeg?from=327834062'
+      ]
+    },
+    dynamic_cover: {
+      url_list: [
+        'https://p3-pc.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_d28300968e9f2c689e509f73f636f427.jpeg?from=327834062'
+      ]
+    }
+  },
+  statistics: {
+    digg_count: 125000,
+    comment_count: 8500,
+    share_count: 4200,
+    collect_count: 31000
+  },
+  music: {
+    title: '@维亚德创作的原声',
+    author: '维亚德',
+    cover_hd: {
+      url_list: [
+        'https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-avt-0015_90d244840d0490b6a22f3458c6792c3d~c5_300x300.jpeg?from=2956013662'
+      ]
+    },
+    cover_medium: {
+      url_list: [
+        'https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-avt-0015_90d244840d0490b6a22f3458c6792c3d~c5_300x300.jpeg?from=2956013662'
+      ]
+    },
+    cover_thumb: {
+      url_list: [
+        'https://p3-pc.douyinpic.com/img/aweme-avatar/tos-cn-avt-0015_90d244840d0490b6a22f3458c6792c3d~c5_300x300.jpeg?from=2956013662'
+      ]
+    }
+  }
+}
+allRecommendVideos.splice(1, 0, realFitnessVideoMock) // Insert it as the second item (index 1)
 
 // console.log('allRecommendVideos', allRecommendVideos)
 // eslint-disable-next-line
