@@ -1,0 +1,498 @@
+﻿﻿﻿﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>哈肌咪练臂力动海报</title>
+    <style>
+      :root {
+        --paper: #fbf5ee;
+        --mint: #cfe9d7;
+        --mint-soft: #eaf5ec;
+        --apricot: #f0a15e;
+        --apricot-soft: #f5d9ac;
+        --ink: #855432;
+        --line: rgba(113, 83, 58, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #ece5dd;
+        font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .poster {
+        position: relative;
+        width: 2480px;
+        height: 3508px;
+        overflow: hidden;
+        border-radius: 16px;
+        background: radial-gradient(circle at 20% 15%, rgba(207, 233, 215, 0.55), transparent 20%),
+          radial-gradient(circle at 80% 9%, rgba(245, 217, 172, 0.72), transparent 18%),
+          linear-gradient(180deg, #fffaf4 0%, #fbf5ee 100%);
+        box-shadow: 0 30px 80px rgba(70, 46, 31, 0.15);
+      }
+
+      .texture,
+      .sparkles {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .texture {
+        background: radial-gradient(circle at 12% 14%, rgba(255, 255, 255, 0.7) 0, transparent 28%),
+          radial-gradient(circle at 76% 58%, rgba(255, 255, 255, 0.55) 0, transparent 26%),
+          repeating-linear-gradient(
+            0deg,
+            rgba(117, 84, 57, 0.018) 0,
+            rgba(117, 84, 57, 0.018) 3px,
+            transparent 3px,
+            transparent 12px
+          );
+        opacity: 0.7;
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(0.3px);
+        opacity: 0.9;
+      }
+
+      .blob.top-left {
+        width: 980px;
+        height: 330px;
+        left: 110px;
+        top: 110px;
+        background: rgba(207, 233, 215, 0.9);
+        transform: rotate(-8deg);
+      }
+
+      .blob.top-right {
+        width: 940px;
+        height: 310px;
+        right: 80px;
+        top: 120px;
+        background: rgba(245, 217, 172, 0.9);
+        transform: rotate(8deg);
+      }
+
+      .blob.bottom-left {
+        width: 760px;
+        height: 220px;
+        left: 80px;
+        bottom: 240px;
+        background: rgba(245, 217, 172, 0.78);
+        transform: rotate(-10deg);
+      }
+
+      .blob.bottom-right {
+        width: 820px;
+        height: 220px;
+        right: 90px;
+        bottom: 210px;
+        background: rgba(207, 233, 215, 0.78);
+        transform: rotate(10deg);
+      }
+
+      .header {
+        position: absolute;
+        top: 170px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 3;
+      }
+
+      .title {
+        margin: 0;
+        font-size: 260px;
+        line-height: 1;
+        color: var(--apricot);
+        font-weight: 900;
+        letter-spacing: 0.02em;
+        text-shadow:
+          -8px -8px 0 rgba(255, 255, 255, 0.95),
+          8px -8px 0 rgba(255, 255, 255, 0.95),
+          -8px 8px 0 rgba(255, 255, 255, 0.95),
+          8px 8px 0 rgba(255, 255, 255, 0.95),
+          0 12px 30px rgba(164, 103, 53, 0.12);
+      }
+
+      .subtitle {
+        margin-top: 38px;
+        font-size: 92px;
+        color: rgba(119, 89, 65, 0.78);
+        font-weight: 800;
+        letter-spacing: 0.06em;
+      }
+
+      .room-line {
+        position: absolute;
+        border: 6px solid rgba(120, 94, 71, 0.24);
+        border-radius: 8px;
+        z-index: 1;
+      }
+
+      .shelf {
+        left: 110px;
+        top: 1080px;
+        width: 430px;
+        height: 850px;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+      }
+
+      .shelf::before,
+      .shelf::after {
+        content: '';
+        position: absolute;
+        left: 28px;
+        right: 28px;
+        height: 6px;
+        background: rgba(120, 94, 71, 0.24);
+      }
+
+      .shelf::before {
+        top: 240px;
+      }
+      .shelf::after {
+        top: 500px;
+      }
+
+      .desk {
+        left: 250px;
+        bottom: 790px;
+        width: 620px;
+        height: 340px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+      }
+
+      .desk::before {
+        content: '';
+        position: absolute;
+        left: 80px;
+        right: 80px;
+        top: 84px;
+        height: 6px;
+        background: rgba(120, 94, 71, 0.22);
+      }
+
+      .window {
+        right: 150px;
+        top: 910px;
+        width: 520px;
+        height: 780px;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+      }
+
+      .window::before,
+      .window::after {
+        content: '';
+        position: absolute;
+        background: rgba(120, 94, 71, 0.22);
+      }
+
+      .window::before {
+        left: 50%;
+        top: 0;
+        width: 6px;
+        height: 100%;
+        transform: translateX(-50%);
+      }
+
+      .window::after {
+        left: 0;
+        top: 52%;
+        width: 100%;
+        height: 6px;
+      }
+
+      .chair {
+        position: absolute;
+        right: 120px;
+        bottom: 760px;
+        width: 420px;
+        height: 520px;
+        border: 6px solid rgba(120, 94, 71, 0.24);
+        border-radius: 110px 110px 36px 36px;
+        transform: skewX(-6deg);
+        z-index: 1;
+      }
+
+      .chair::before,
+      .chair::after {
+        content: '';
+        position: absolute;
+        bottom: -150px;
+        width: 6px;
+        height: 180px;
+        background: rgba(120, 94, 71, 0.24);
+      }
+
+      .chair::before {
+        left: 78px;
+      }
+      .chair::after {
+        right: 70px;
+      }
+
+      .dumbbell {
+        position: absolute;
+        width: 240px;
+        height: 70px;
+        z-index: 1;
+      }
+
+      .dumbbell::before,
+      .dumbbell::after,
+      .dumbbell span {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(120, 94, 71, 0.24);
+      }
+
+      .dumbbell span {
+        left: 40px;
+        right: 40px;
+        height: 8px;
+        border-radius: 999px;
+      }
+
+      .dumbbell::before {
+        left: 0;
+        width: 34px;
+        height: 70px;
+        border-radius: 10px;
+        box-shadow: 42px 0 0 rgba(120, 94, 71, 0.24);
+      }
+
+      .dumbbell::after {
+        right: 0;
+        width: 34px;
+        height: 70px;
+        border-radius: 10px;
+        box-shadow: -42px 0 0 rgba(120, 94, 71, 0.24);
+      }
+
+      .dumbbell.top-left {
+        left: 130px;
+        top: 960px;
+        transform: rotate(-25deg);
+      }
+      .dumbbell.bottom-right {
+        right: 260px;
+        bottom: 560px;
+        transform: rotate(26deg);
+      }
+
+      .star,
+      .spark {
+        position: absolute;
+        color: rgba(230, 170, 92, 0.7);
+        font-weight: 700;
+        z-index: 2;
+      }
+
+      .star {
+        font-size: 72px;
+      }
+
+      .spark {
+        font-size: 40px;
+        color: rgba(170, 210, 186, 0.86);
+      }
+
+      .hero-circle {
+        position: absolute;
+        left: 50%;
+        top: 1120px;
+        width: 1180px;
+        height: 1180px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: radial-gradient(circle at 50% 45%, #d8eee0 0%, #c3e1cf 72%, #b7d8c5 100%);
+        z-index: 2;
+        box-shadow: inset 0 0 0 12px rgba(255, 255, 255, 0.52);
+      }
+
+      .hero-circle img.main-cat {
+        position: absolute;
+        left: 50%;
+        top: 48%;
+        width: 860px;
+        transform: translate(-50%, -50%);
+        object-fit: contain;
+      }
+
+      .sticker {
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.84);
+        border: 6px solid rgba(255, 255, 255, 0.96);
+        box-shadow: 0 18px 28px rgba(101, 72, 48, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 3;
+      }
+
+      .sticker img {
+        width: 84%;
+        height: 84%;
+        object-fit: contain;
+      }
+
+      .sticker.one {
+        left: 200px;
+        top: 1880px;
+        transform: rotate(-8deg);
+      }
+      .sticker.two {
+        right: 180px;
+        top: 1940px;
+        transform: rotate(10deg);
+      }
+
+      .badge-row {
+        position: absolute;
+        left: 140px;
+        right: 140px;
+        bottom: 210px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 46px;
+        z-index: 3;
+      }
+
+      .badge {
+        min-height: 240px;
+        padding: 34px 20px;
+        border-radius: 120px;
+        background: rgba(255, 252, 246, 0.94);
+        border: 8px solid;
+        box-shadow: 0 18px 30px rgba(115, 81, 54, 0.08);
+        text-align: center;
+      }
+
+      .badge:nth-child(1) {
+        border-color: rgba(241, 171, 99, 0.9);
+        color: #d0873f;
+      }
+      .badge:nth-child(2) {
+        border-color: rgba(170, 205, 157, 0.95);
+        color: #8fb061;
+        background: rgba(244, 251, 239, 0.96);
+      }
+      .badge:nth-child(3) {
+        border-color: rgba(241, 171, 99, 0.9);
+        color: #d0873f;
+      }
+
+      .badge strong {
+        display: block;
+        font-size: 84px;
+        line-height: 1.05;
+        margin-bottom: 10px;
+      }
+
+      .badge span {
+        display: block;
+        font-size: 70px;
+        line-height: 1.15;
+        font-weight: 700;
+      }
+
+      .foot {
+        position: absolute;
+        left: 110px;
+        bottom: 72px;
+        color: rgba(133, 84, 50, 0.34);
+        font-size: 42px;
+        letter-spacing: 0.18em;
+        z-index: 2;
+      }
+
+      @page {
+        size: A3 portrait;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="poster">
+      <div class="texture"></div>
+      <div class="blob top-left"></div>
+      <div class="blob top-right"></div>
+      <div class="blob bottom-left"></div>
+      <div class="blob bottom-right"></div>
+
+      <header class="header">
+        <h1 class="title">哈肌咪练臂力动</h1>
+        <div class="subtitle">AI 督练的短视频练臂养成</div>
+      </header>
+
+      <div class="room-line shelf"></div>
+      <div class="room-line desk"></div>
+      <div class="room-line window"></div>
+      <div class="chair"></div>
+      <div class="dumbbell top-left"><span></span></div>
+      <div class="dumbbell bottom-right"><span></span></div>
+
+      <div class="star" style="top: 360px; left: 210px"></div>
+      <div class="star" style="top: 1450px; right: 265px"></div>
+      <div class="spark" style="top: 300px; right: 260px"></div>
+      <div class="spark" style="top: 2100px; left: 280px"></div>
+      <div class="spark" style="bottom: 360px; right: 180px"></div>
+
+      <section class="hero-circle">
+        <img class="main-cat" src="/src/cats/4.png" alt="哈肌咪主视觉" />
+      </section>
+
+      <div class="sticker one">
+        <img src="/src/cats/1.png" alt="哈肌咪计划形象" />
+      </div>
+      <div class="sticker two">
+        <img src="/src/cats/3.png" alt="哈肌咪激励形象" />
+      </div>
+
+      <section class="badge-row">
+        <div class="badge">
+          <strong>动作</strong>
+          <span>切片练</span>
+        </div>
+        <div class="badge">
+          <strong>周目标</strong>
+          <span>不断签</span>
+        </div>
+        <div class="badge">
+          <strong>休息后</strong>
+          <span>召回练</span>
+        </div>
+      </section>
+
+      <div class="foot">HAJIMI ARM POWER A3 POSTER</div>
+    </main>
+  </body>
+</html>
